@@ -1,0 +1,27 @@
+[{
+  "name": "testr.js",
+  "path": "testr.js",
+  "usage": "node",
+  "tests": [
+    { "argv": "--answer=hello --ack=hello", "result": 100 },
+    { "argv": "--answer=hello --ack=\" hello \"", "result": 100 },
+    { "argv": "--answer=hello --ack=hellO", "result": 20 },
+    { "argv": "--answer=hello --ack=hellO --i", "result": 100 },
+    { "argv": "--answer=hello", "result": 0 }
+  ]
+},{
+  "name": "return.js",
+  "path": "return.js",
+  "usage": "node",
+  "tests": [
+    { "argv": "--answer=100", "result": 100 },
+    { "argv": "--answer=-20", "result": -20 }
+  ]
+},{
+  "name": "time.js",
+  "path": "time.js",
+  "usage": "node",
+  "tests": [
+    { "argv": null, "result": 100 }
+  ]
+}]
