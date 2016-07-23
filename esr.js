@@ -74,11 +74,11 @@ class SpecRunner {
      */
     constructor(mans, options) {
         Object.assign(this, {
-                rootDir: './',
-                parse: (output) => output,
+            rootDir: './',
+            parse: (output) => output,
             print: process.stdout.write.bind(process.stdout)
 
-    }, options || {});
+        }, options || {});
 
         this._mans = mans;
         this._insp = new Inspector((sig, message) => this.print(`   ${sig} ${message}\n`));
@@ -100,52 +100,52 @@ class SpecRunner {
         this._mans.forEach((man) => {
             this.print(`  Testing: ${man.name}\n`);
 
-        // check script existence
-        let script = `${this.rootDir}/${man.path}`,
-            isExists = fs.existsSync(script);
+            // check script existence
+            let script = `${this.rootDir}/${man.path}`,
+                isExists = fs.existsSync(script);
 
-        this._insp.register('script exists', +isExists);
+            this._insp.register('script exists', +isExists);
 
-        // execute tests
-        man.tests.forEach((test, index) => {
+            // execute tests
+            man.tests.forEach((test, index) => {
 
             let output = null,
-            isPassed = true,
-            begTime = +new Date,
-            cmdPreview = `${index +1}. "$ ${man.usage} ${man.name}${test.argv !== null ? ` ${test.argv}` : ''}" should be ${test.result}`,
-            cmdExecute = `${man.usage} ${script}${test.argv !== null ? ` ${test.argv}` : ''}`;
+                isPassed = true,
+                begTime = +new Date,
+                cmdPreview = `${index +1}. "$ ${man.usage} ${man.name}${test.argv !== null ? ` ${test.argv}` : ''}" should be ${test.result}`,
+                cmdExecute = `${man.usage} ${script}${test.argv !== null ? ` ${test.argv}` : ''}`;
 
-        if (isExists) {
-            try {
-                output = this.parse(execSync(cmdExecute, {
-                    stdio: ['pipe', 'pipe', 'ignore']
-                }));
-                // if unexpected result then fail signal
-                if (output !== test.result) {
-                    this._insp.register(`${cmdPreview} but returned ${output} [${+new Date - begTime} ms]`, 0);
+            if (isExists) {
+                try {
+                    output = this.parse(execSync(cmdExecute, {
+                        stdio: ['pipe', 'pipe', 'ignore']
+                    }));
+                    // if unexpected result then fail signal
+                    if (output !== test.result) {
+                        this._insp.register(`${cmdPreview} but returned ${output} [${+new Date - begTime} ms]`, 0);
+                    }
+                    // else successful
+                    else {
+                        this._insp.register(`${cmdPreview} [${+new Date - begTime} ms]`, 1);
+                    }
                 }
-                // else successful
-                else {
-                    this._insp.register(`${cmdPreview} [${+new Date - begTime} ms]`, 1);
+                    // on exception
+                catch(e) {
+                    this._insp.register(`${cmdPreview} but threw an exception`, -1);
                 }
             }
-                // on exception
-            catch(e) {
-                this._insp.register(`${cmdPreview} but threw an exception`, -1);
+            else {
+                this._insp.register(cmdPreview, 0);
             }
-        }
-        else {
-            this._insp.register(cmdPreview, 0);
-        }
+
+        });
 
     });
 
-    });
+    this.print(`\nSpecs passed: ${this._insp.toString()}`);
+    this.print(`\nTotal time: ${(+new Date - begTime)/1000.} s\n`);
 
-        this.print(`\nSpecs passed: ${this._insp.toString()}`);
-        this.print(`\nTotal time: ${(+new Date - begTime)/1000.} s\n`);
-
-        return this._insp.result;
+    return this._insp.result;
     }
 }
 

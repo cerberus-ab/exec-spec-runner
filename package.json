@@ -1,7 +1,7 @@
 {
   "name": "exec-spec-runner",
   "version": "0.2.0",
-  "description": "Simple spec-runner for executable scripts",
+  "description": "Simple spec-runner for executable scripts.",
   "main": "esr.js",
   "scripts": {
     "test": "node ./examples/test.js"
