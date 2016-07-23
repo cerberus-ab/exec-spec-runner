@@ -1,6 +1,6 @@
 {
   "name": "exec-spec-runner",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Simple spec-runner for executable scripts.",
   "main": "esr.js",
   "scripts": {
