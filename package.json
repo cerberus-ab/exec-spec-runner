@@ -1,0 +1,22 @@
+{
+  "name": "exec-spec-runner",
+  "version": "0.2.0",
+  "description": "Simple spec-runner for executable scripts",
+  "scripts": {
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cerberus-ab/exec-spec-runner.git"
+  },
+  "keywords": [
+    "execSync",
+    "testing"
+  ],
+  "author": "Antony Belov <cerberus.ab@mail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cerberus-ab/exec-spec-runner/issues"
+  },
+  "homepage": "https://github.com/cerberus-ab/exec-spec-runner#readme"
+}
